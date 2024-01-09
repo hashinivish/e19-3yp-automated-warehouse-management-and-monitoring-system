@@ -12,7 +12,7 @@ const socketIo = require('socket.io');
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-const port =process.env.PORT;
+const port =process.env.PORT || 5000;
 
 // Connect to MongoDB Atlas
 mongoose.connect('mongodb+srv://dolly:dolly@cluster0.5kvep8k.mongodb.net/?retryWrites=true&w=majority');
