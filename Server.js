@@ -185,19 +185,28 @@ app.post('/login', async (req, res) => {
     io.emit('palletJacks', await getPalletJacksData());
   });
 
+  app.get('/palletJacksData', async (req, res) => {
+    try {
+      res.json(await getPalletJacksData());
+    } catch (error) {
+      console.error('Error fetching pallet data:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+  
+  app.get('/', async (req, res) => {
+    try {
+      res.json("This is backend server");
+    } catch (error) {
+      console.error('Error fetching pallet data:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
 server.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
 
-
-app.get('/palletJacksData', async (req, res) => {
-  try {
-    res.json(await getPalletJacksData());
-  } catch (error) {
-    console.error('Error fetching pallet data:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
 
 // // Start the server
 // app.listen(port, () => {
