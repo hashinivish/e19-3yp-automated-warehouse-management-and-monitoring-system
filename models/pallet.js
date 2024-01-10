@@ -11,7 +11,7 @@ const palletSchema = new mongoose.Schema({
     type: String,
     default: 'Available', // You can set a default status if needed
   },
-  location: {type:String,default:'Base Station',},
+  location: {type:String,default:""},
   assignedWorker:{type:String,default:'',},
   currentWeight:{type:Number,default:0},
   batteryLevel:{type:Number,default:100},

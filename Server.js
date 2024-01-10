@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 const port =process.env.PORT || 5000;
 
 // Connect to MongoDB Atlas
-mongoose.connect('mongodb+srv://dolly:dolly@cluster0.5kvep8k.mongodb.net/?retryWrites=true&w=majority');
+mongoose.connect('mongodb+srv://e19142:qDzTryRk4C8uVm5b@cluster0.kb92u73.mongodb.net/?retryWrites=true&w=majority');
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
@@ -145,7 +145,7 @@ app.post('/login', async (req, res) => {
 
 
   app.post('/addpallet', async (req, res) => {
-    const { palletId, assignedWorker} = req.body;
+    const { palletId, assignedWorker,location} = req.body;
     console.log(req.body);
   
     try {
@@ -161,6 +161,7 @@ app.post('/login', async (req, res) => {
           existingPallet.assignedWorker = assignedWorker;
           existingPallet.status = 'Unavailable';
         }
+        existingPallet.location = location;
         await existingPallet.save();
         res.status(200).json({ message: 'Pallet updated successfully' });
       } else {
@@ -168,6 +169,7 @@ app.post('/login', async (req, res) => {
         const newPallet = new Pallet({
           palletId,
           assignedWorker,
+          location,
         });
         if(assignedWorker==''){
           newPallet.status = 'Available';
@@ -188,6 +190,15 @@ app.post('/login', async (req, res) => {
   app.get('/palletJacksData', async (req, res) => {
     try {
       res.json(await getPalletJacksData());
+    } catch (error) {
+      console.error('Error fetching pallet data:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+  app.get('/employeesData', async (req, res) => {
+    try {
+      console.log("bvcfghlkj");
+      res.json(await getEmployees());
     } catch (error) {
       console.error('Error fetching pallet data:', error);
       res.status(500).json({ error: 'Internal server error' });
